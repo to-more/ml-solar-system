@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: ms-solar-system
+  data:
+   mongodb:
+    uri: "mongodb://localhost:27017/weather"
+
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+  endpoint:
+    mappings:
+      enabled: true
