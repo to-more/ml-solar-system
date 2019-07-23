@@ -1,48 +1,58 @@
 package com.mlsolarsystem.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import static com.mlsolarsystem.utils.MathUtils.scaled;
-
 /**
  * Created by tom
  */
 @Document(collection = "galaxy")
-public class Planet implements Comparable<Planet> {
+public class Planet implements Movable, Comparable<Planet> {
 
-    @Field("radius")
-    private double radius;
-    @Field("name")
+    @Id
     private String name;
+    private double radius;
     @Field("angular_velocity")
     private BigDecimal angularVelocity;
+    private Position position;
 
     public static Planet SUN(){
         return new Planet(0, "SUN", 0);
+    }
+
+    public Planet(){
+        super();
+        this.position = new Position(0, 0);
     }
 
     public Planet(double radius, String name, double angularVelocity) {
         this.radius = radius;
         this.name = name;
         this.angularVelocity = BigDecimal.valueOf(Math.toRadians(angularVelocity));
+        this.position = new Position(0, 0);
     }
 
-    public Position getPositionAt(Time time) {
-        double omegaT = angularVelocity.doubleValue() * time.getValue();
-        return new Position(
-            scaled(radius * Math.cos(omegaT)),
-            scaled(radius * Math.sin(omegaT))
-        );
+
+    public String getName() {
+        return name;
     }
 
-    public BigDecimal distanceTo(Planet nextPlanet, Time time) {
-        return this.getPositionAt(time)
+    public double getRadius() {
+        return radius;
+    }
+
+    public BigDecimal getAngularVelocity() {
+        return angularVelocity;
+    }
+
+    public BigDecimal distanceTo(Planet nextPlanet) {
+        return this.getPosition()
             .distanceTo(nextPlanet
-                .getPositionAt(time));
+                .getPosition());
     }
 
     @Override
@@ -66,5 +76,14 @@ public class Planet implements Comparable<Planet> {
     @Override
     public int hashCode() {
         return Objects.hash(radius, name, angularVelocity);
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void moveTo(Position position) {
+        this.position = position;
     }
 }

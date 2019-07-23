@@ -22,6 +22,7 @@ public class Weather {
     private BigDecimal intensity;
 
     public Weather() {
+        intensity = BigDecimal.ZERO;
     }
 
     public Weather(String day, BigDecimal intensity) {
@@ -35,6 +36,10 @@ public class Weather {
     }
     public BigDecimal getIntensity() {
         return intensity;
+    }
+    public Weather withDay(Integer day) {
+        this.day = day.toString();
+        return this;
     }
 
     public Weather rain() {
