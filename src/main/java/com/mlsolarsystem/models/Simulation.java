@@ -1,5 +1,7 @@
 package com.mlsolarsystem.models;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,15 +9,18 @@ import java.util.stream.Collectors;
  * Created by tomReq on 7/23/19.
  */
 public class Simulation implements Analyzable {
-    private Integer day;
+    @Id
+    private String day;
     private List<Planet> planets;
 
+    public Simulation(){ super(); }
+
     public Simulation(Integer day, List<Planet> planets) {
-        this.day = day;
+        this.day = day.toString();
         this.planets = planets;
     }
 
-    public Integer getDay() {
+    public String getDay() {
         return day;
     }
 

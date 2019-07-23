@@ -84,10 +84,10 @@ public class GalaxyService {
                     Movement movement = new Movement(planet.getAngularVelocity().doubleValue(), planet.getRadius());
                     planet.moveTo(movement.move(time));
                 });
-                simulations.add(new Simulation(day, planets));
+                simulationRepository.save(new Simulation(day, planets));
             });
 
-            simulations.forEach(simulation -> weathers.add(weatherPredictor.predictWeather(simulation)));
+            simulationRepository.findAll().forEach(simulation -> weathers.add(weatherPredictor.predictWeather(simulation)));
             weatherRepository.saveAll(weathers);
             simulationRepository.saveAll(simulations);
             return null;
