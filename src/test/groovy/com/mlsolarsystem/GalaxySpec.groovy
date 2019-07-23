@@ -1,7 +1,9 @@
 package com.mlsolarsystem
 
-import com.mlsolarsystem.models.Galaxy
 import com.mlsolarsystem.models.Planet
+import com.mlsolarsystem.models.Position
+import com.mlsolarsystem.models.Simulation
+import com.mlsolarsystem.models.WeatherPredictor
 import spock.lang.Specification
 /**
  * Created by tom
@@ -10,19 +12,30 @@ class GalaxySpec extends Specification {
 
     def "predict weather at specific day"(){
         given:
-        Galaxy galaxy = new Galaxy()
-        galaxy.add ferengi
-        galaxy.add betasoide
-        galaxy.add vulcano
+        WeatherPredictor weatherPredictor = new WeatherPredictor()
+        def planets = new ArrayList()
+        def ferengi = new Planet()
+        def betasoide = new Planet()
+        def vulcano = new Planet()
+        ferengi.moveTo(ferengiPos as Position)
+        betasoide.moveTo(betasoidePos as Position)
+        vulcano.moveTo(vulcanoPos as Position)
+
+        planets.add ferengi
+        planets.add betasoide
+        planets.add vulcano
+
+        def simulation = new Simulation(day, planets)
+
         when:
-        def weather = galaxy.predictWeatherAt(day)
+        def weather = weatherPredictor.predictWeather(simulation)
         then:
         weather.description == expectedWeather
         where:
-        expectedWeather | day | ferengi | betasoide | vulcano
-        "Drought"|1|new Planet(1000, "Ferengi", 90)|new Planet(200, "Betasoide", 90)|new Planet(1, "Vulcano", 90)
-        "Rain"|1|new Planet(1, "Ferengi", 45)|new Planet(1, "Betasoide", 135)|new Planet(1, "Vulcano", 270)
-        "Sunny"|1|new Planet(1000, "Ferengi", 45)|new Planet(200, "Betasoide", 135)|new Planet(1, "Vulcano", 90)
-        "Optimum pressure and temperature"|1|new Planet(1, "Ferengi", 225)|new Planet(1, "Betasoide", 270)|new Planet(1, "Vulcano", 315)
+        expectedWeather | day | ferengiPos | betasoidePos | vulcanoPos
+        "Drought"| 1 |new Position(0, 10) |new Position(0, 20)|new Position(0, 30)
+        "Rain"|1|new Position(1, 1)|new Position(-1, 1)|new Position(0, -1)
+        "Sunny"|1|new Position(1000, 1000)|new Position(-200, 200)|new Position(0, 1)
+        "Optimum pressure and temperature"|1|new Position(1, -1)|new Position(0, -1)|new Position(1, -1)
     }
 }

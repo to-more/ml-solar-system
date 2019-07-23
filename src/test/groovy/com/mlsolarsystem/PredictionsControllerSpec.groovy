@@ -3,6 +3,7 @@ package com.mlsolarsystem
 import com.mlsolarsystem.controllers.PredictionController
 import com.mlsolarsystem.models.Weather
 import com.mlsolarsystem.repository.GalaxyRepository
+import com.mlsolarsystem.repository.SimulationRepository
 import com.mlsolarsystem.repository.WeatherRepository
 import com.mlsolarsystem.services.GalaxyService
 import org.springframework.http.HttpStatus
@@ -19,7 +20,8 @@ class PredictionsControllerSpec extends Specification {
 
     def galaxyRepository = Mock(GalaxyRepository)
     def weatherRepository = Mock(WeatherRepository)
-    def galaxyService = new GalaxyService(galaxyRepository, weatherRepository)
+    def simulationRepository = Mock(SimulationRepository)
+    def galaxyService = new GalaxyService(galaxyRepository, weatherRepository, simulationRepository)
     def predictionController = new PredictionController(galaxyService)
 
     MockMvc mockMvc = standaloneSetup(predictionController).build()

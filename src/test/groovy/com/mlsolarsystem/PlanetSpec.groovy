@@ -1,31 +1,19 @@
 package com.mlsolarsystem
 
 import com.mlsolarsystem.models.Planet
-import com.mlsolarsystem.models.Position
-import com.mlsolarsystem.models.Time
 import spock.lang.Specification
 /**
  * Created by tom
  */
 class PlanetSpec extends Specification {
 
-    def "get the actual position at time"(){
-        given:
-        Planet planet = new Planet(1, "", 90)
-        when:
-        def position = planet.getPositionAt(new Time(2))
-        def anotherPosition = new Position(-1,0)
-        then:
-        position.getX() == anotherPosition.getX()
-        position.getY() == anotherPosition.getY()
-    }
 
     def "calculates distance to another planet at time"(){
         given:
         Planet planet = new Planet(1, "", 0)
         Planet anotherPlanet = new Planet(1, "", 90)
         when:
-        def distance = planet.distanceTo(anotherPlanet, new Time(4))
+        def distance = planet.distanceTo(anotherPlanet)
         then:
         distance == 0
     }

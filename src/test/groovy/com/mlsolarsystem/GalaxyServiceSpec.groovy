@@ -1,11 +1,12 @@
 package com.mlsolarsystem
 
-import com.mlsolarsystem.models.Planet
+
+import com.mlsolarsystem.models.Weather
 import com.mlsolarsystem.repository.GalaxyRepository
+import com.mlsolarsystem.repository.SimulationRepository
 import com.mlsolarsystem.repository.WeatherRepository
 import com.mlsolarsystem.services.GalaxyService
 import spock.lang.Specification
-
 /**
  * Created by tom
  */
@@ -13,18 +14,23 @@ class GalaxyServiceSpec extends Specification {
 
     GalaxyRepository galaxyRepository  = Mock(GalaxyRepository)
     WeatherRepository weatherRepository = Mock(WeatherRepository)
-    GalaxyService galaxyService = new GalaxyService(galaxyRepository, weatherRepository)
+    SimulationRepository simulationRepository = Mock(SimulationRepository)
+    GalaxyService galaxyService = new GalaxyService(galaxyRepository, weatherRepository, simulationRepository)
 
     def "predict weather at day"(){
         when:
-        def planets = [
-            new Planet(1000, "Ferengi", 10),
-            new Planet(200, "Betasoide", 70),
-            new Planet(1, "Vulcano", 270)
+        def weathers = [
+            new Weather().sunny(),
+            new Weather().rain(),
+            new Weather().drought(),
+            new Weather().optimumPressureAndTemperature()
         ]
-        1 * galaxyRepository.findAll() >> planets
+        1 * weatherRepository.findAllById(_ as Iterable<String>) >> weathers
         then:
-        def weather = galaxyService.predictWeatherAt(100)
-        weather.description == "Rain"
+        def prediction = galaxyService.predictWeatherAtRange(0, 100)
+        prediction.daysOfDrought == 1
+        prediction.daysOfOptimumPressureAndTemperature == 1
+        prediction.daysOfSun == 1
+        prediction.daysOfRain == 1
     }
 }
