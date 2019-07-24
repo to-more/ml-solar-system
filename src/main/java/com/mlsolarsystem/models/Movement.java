@@ -1,6 +1,6 @@
 package com.mlsolarsystem.models;
 
-import static com.mlsolarsystem.utils.MathUtils.scaled;
+import static java.lang.Math.round;
 
 /**
  * Created by tom
@@ -17,11 +17,11 @@ public class Movement {
         this.radius = radius;
     }
 
-    public Position move(Time time){
-        double omegaT = angularVelocity * time.getValue();
+    public Position move(Position current, Time time){
+        double omegaT = Math.toRadians(angularVelocity * time.getValue());
         return new Position(
-            scaled(radius * Math.cos(omegaT)),
-            scaled(radius * Math.sin(omegaT))
+            round((current.getX() * Math.cos(omegaT)) - (current.getY() * Math.sin(omegaT))),
+            round((current.getY() * Math.cos(omegaT)) + (current.getX() * Math.sin(omegaT)))
         );
     }
 }

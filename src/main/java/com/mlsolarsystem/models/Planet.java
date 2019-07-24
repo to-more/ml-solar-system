@@ -21,7 +21,7 @@ public class Planet implements Movable, Comparable<Planet> {
     private Position position;
 
     public static Planet SUN(){
-        return new Planet(0, "SUN", 0);
+        return new Planet(0, "SUN", 0, new Position(0, 0));
     }
 
     public Planet(){
@@ -34,6 +34,13 @@ public class Planet implements Movable, Comparable<Planet> {
         this.name = name;
         this.angularVelocity = BigDecimal.valueOf(Math.toRadians(angularVelocity));
         this.position = new Position(0, 0);
+    }
+
+    public Planet(double radius, String name, double angularVelocity, Position position) {
+        this.radius = radius;
+        this.name = name;
+        this.angularVelocity = BigDecimal.valueOf(Math.toRadians(angularVelocity));
+        this.position = position;
     }
 
 
@@ -84,6 +91,6 @@ public class Planet implements Movable, Comparable<Planet> {
 
     @Override
     public void moveTo(Position position) {
-        this.position = position;
+        this.position.plus(position);
     }
 }

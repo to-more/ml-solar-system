@@ -61,35 +61,36 @@ public class GalaxyService {
 
     @Async
     public void createPlanetModel() {
-        createPlanetModel(1, 1000);
+        createPlanetModel(1, 3650);
     }
 
     @Async
     public void createPlanetModel(Integer startDay, Integer endDay) {
         LoggerUtils.benchmark(CREATING_MODEL_FOR_WEATHER_PREDICTION, ()-> {
             List<Planet> planets = Arrays.asList(
-                new Planet(500, "Ferengi", 1),
-                new Planet(2000, "Betasoide", 3),
-                new Planet(1000, "Vulcano", -5)
+                new Planet(500, "Ferengi", 1, new Position(0, 500.0)),
+                new Planet(2000, "Betasoide", 3, new Position(0, 2000.0)),
+                new Planet(1000, "Vulcano", -5, new Position(0, 1000.0))
             );
             galaxyRepository.saveAll(planets);
-            Galaxy galaxy = new Galaxy<>(planets);
             List<Weather> weathers = new ArrayList<>();
-            List<Simulation> simulations = new ArrayList<>();
             WeatherPredictor weatherPredictor = new WeatherPredictor();
 
             IntStream.rangeClosed(startDay, endDay).forEach(day -> {
                 Time time = new Time(day);
                 planets.forEach(planet -> {
                     Movement movement = new Movement(planet.getAngularVelocity().doubleValue(), planet.getRadius());
-                    planet.moveTo(movement.move(time));
+                    planet.moveTo(movement.move(planet.getPosition(), time));
                 });
                 simulationRepository.save(new Simulation(day, planets));
             });
 
-            simulationRepository.findAll().forEach(simulation -> weathers.add(weatherPredictor.predictWeather(simulation)));
+            simulationRepository.findAll().forEach(
+                simulation ->
+                    weathers.add(weatherPredictor.predictWeather(simulation)
+                        .withDay(Integer.valueOf(simulation.getDay())))
+            );
             weatherRepository.saveAll(weathers);
-            simulationRepository.saveAll(simulations);
             return null;
         });
     }

@@ -71,4 +71,9 @@ public class Position {
                 .add("y=" + y)
                 .toString();
     }
+
+    public void plus(Position position) {
+        this.x += position.x;
+        this.y += position.y;
+    }
 }
