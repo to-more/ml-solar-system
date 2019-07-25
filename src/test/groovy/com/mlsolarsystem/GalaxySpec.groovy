@@ -36,6 +36,7 @@ class GalaxySpec extends Specification {
         "Drought"| 1 |new Position(0, 10) |new Position(0, 20)|new Position(0, 30)
         "Rain"|1|new Position(1, 1)|new Position(-1, 1)|new Position(0, -1)
         "Sunny"|1|new Position(1000, 1000)|new Position(-200, 200)|new Position(0, 1)
-        "Optimum pressure and temperature"|1|new Position(1, -1)|new Position(0, -1)|new Position(1, -1)
+        "Optimum pressure and temperature"|1|new Position(-1, -1)|new Position(0, -1)|new Position(1, -1)
+        "Optimum pressure and temperature"|1|new Position(1, 0)|new Position(1, -1)|new Position(1, 2)
     }
 }

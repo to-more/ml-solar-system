@@ -18,6 +18,16 @@ public class Triangle {
         this.c = c;
     }
 
+    public boolean areCollinear(){
+        Vector2D vectorA = new Vector2D(a.asCoordinates());
+        Vector2D vectorB = new Vector2D(b.asCoordinates());
+        Vector2D vectorC = new Vector2D(c.asCoordinates());
+
+        return vectorA.distanceInf(vectorC) ==
+        vectorA.distanceInf(vectorB) +
+        vectorB.distanceInf(vectorC);
+    }
+
     public boolean contains(Position queryPoint) {
         Vector2D queryVector    = new Vector2D(queryPoint.asCoordinates());
         Vector2D vectorA        = new Vector2D(a.asCoordinates());

@@ -1,14 +1,11 @@
 package com.mlsolarsystem.models.analyzer;
 
-import com.mlsolarsystem.models.Planet;
 import com.mlsolarsystem.models.Position;
 import com.mlsolarsystem.models.Weather;
 
 import java.util.List;
 
-import static com.mlsolarsystem.models.GalaxyMath.calculatePerimeter;
-import static com.mlsolarsystem.models.GalaxyMath.containsSun;
-import static com.mlsolarsystem.models.GalaxyMath.planetsAreAligned;
+import static com.mlsolarsystem.models.GalaxyMath.*;
 
 /**
  * Created by tom
@@ -22,12 +19,12 @@ public class RainAnalyzer implements WeatherAnalyzer {
     }
 
     @Override
-    public Weather analyze(List<Position> planets) {
+    public Weather analyze(List<Position> positions) {
         Weather weather = new Weather();
-        if(!planetsAreAligned(planets) && containsSun(planets)) {
-            weather.rain(calculatePerimeter(planets));
+        if(!planetsAreAligned(positions) && containsSun(positions)) {
+            weather.rain(calculatePerimeter(positions));
         } else {
-            weather = next.analyze(planets);
+            weather = next.analyze(positions);
         }
         return weather;
     }

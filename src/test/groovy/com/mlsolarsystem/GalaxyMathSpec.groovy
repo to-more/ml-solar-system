@@ -8,6 +8,14 @@ import spock.lang.Specification
  */
 class GalaxyMathSpec extends Specification {
 
+    static boolean checkEquality(double[] numbers) {
+        double total = 0
+        for (double number : numbers) {
+            total += number
+        }
+        return Math.abs(numbers[0]) == (Math.abs(total) / numbers.length)
+    }
+
     def "check if the planets are aligned"(){
         given: "a galaxy with 3 planets"
         def positions = new ArrayList()
@@ -23,6 +31,10 @@ class GalaxyMathSpec extends Specification {
         expectedResult|ferengi                            |betasoide |vulcano
         true | new Position(1, 0)          | new Position(1, 0)  |new Position(1, 0)
         true | new Position(0, 1)          | new Position(0, 2)  |new Position(0, 3)
+        true | new Position(-1, 1)         | new Position(0, 1)  | new Position(1, 1)
+        true | new Position(1, 1)          | new Position(0, 1)  |new Position(-1, 1)
+        true | new Position(0, 1)          | new Position(1, 1)  |new Position(-1, 1)
+        true | new Position(1, 0)          | new Position(1, 1)  |new Position(1, -1)
     }
 
     def "calculate perimeter between planets"(){

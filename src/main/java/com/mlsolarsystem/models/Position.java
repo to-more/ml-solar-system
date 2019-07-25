@@ -10,7 +10,7 @@ import java.util.StringJoiner;
  * Created by tom
  */
 @Document(collection = "galaxy")
-public class Position {
+public class Position implements Comparable<Position>{
 
     private double x;
     private double y;
@@ -80,4 +80,11 @@ public class Position {
         this.x += position.x;
         this.y += position.y;
     }
-}
+
+    @Override
+    public int compareTo(Position position) {
+        if(position == null){
+            return 1;
+        }
+        return Double.compare(this.x, position.x);
+    }}
