@@ -38,6 +38,13 @@ La solucion queda planteada como sigue:
     `GET $HOST/predictions?startDay=1&endDay=100 => devuelve un reporte con la cantidad de dias de lluvia, sol, clima seco y optimo más el clima lluvioso más intenso.`
 
 
+#### **El modelo se crea en el arranque de la aplicación o ejecutando el sgte endpoint:**
+
+```bash 
+curl -XPOST $HOST/predictions?startDay=1&endDay=100
+```
+
+
 ## Rutas:
 
 | Path        | Metodo          | Descripción      |
