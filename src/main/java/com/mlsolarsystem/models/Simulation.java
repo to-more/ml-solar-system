@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by tomReq on 7/23/19.
+ * Created by tom
  */
 public class Simulation implements Analyzable {
     @Id

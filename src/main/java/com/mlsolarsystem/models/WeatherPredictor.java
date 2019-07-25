@@ -3,7 +3,7 @@ package com.mlsolarsystem.models;
 import com.mlsolarsystem.models.analyzer.*;
 
 /**
- * Created by tomReq on 7/23/19.
+ * Created by tom
  */
 public class WeatherPredictor {
     private WeatherAnalyzer weatherAnalyzer;

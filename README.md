@@ -46,6 +46,10 @@ La solucion queda planteada como sigue:
 | /predictions/:id | POST | Genera las predicciones para un rango de dias |
 | /weathers/:dia | GET | Devuelve el clima para el dia dado |
 | /weathers/ | DELETE | Borra la base de climas |
+| /planets/  | POST | Crean un planeta |
+| /planets/  | GET | Lista los planetas |
+| /planets/:name | GET | Retorna un planeta |
+| /planets/ | DELETE | Borra los planetas |
 
 
 
