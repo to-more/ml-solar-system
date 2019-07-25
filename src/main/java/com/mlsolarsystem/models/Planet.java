@@ -32,14 +32,14 @@ public class Planet implements Movable, Comparable<Planet> {
     public Planet(double radius, String name, double angularVelocity) {
         this.radius = radius;
         this.name = name;
-        this.angularVelocity = BigDecimal.valueOf(Math.toRadians(angularVelocity));
+        this.angularVelocity = BigDecimal.valueOf(angularVelocity);
         this.position = new Position(0, 0);
     }
 
     public Planet(double radius, String name, double angularVelocity, Position position) {
         this.radius = radius;
         this.name = name;
-        this.angularVelocity = BigDecimal.valueOf(Math.toRadians(angularVelocity));
+        this.angularVelocity = BigDecimal.valueOf(angularVelocity);
         this.position = position;
     }
 
